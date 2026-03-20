@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --color-mp-blue-dark: #1a365d;
+  --color-mp-blue: #0d6efd;
+  --color-mp-green: #198754;
+  --color-mp-green-light: #d1e7dd;
+  --color-mp-bg: #f8f9fa;
+  --color-cenabast-blue: #002f5d;
+  --color-cenabast-red: #ee3124;
+  
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  --shadow-mp: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+@layer base {
+  body {
+    @apply bg-mp-bg text-slate-800 antialiased;
+    font-family: var(--font-sans);
+  }
+}
+
+@layer components {
+  .card-mp {
+    @apply bg-white rounded-lg shadow-sm border border-slate-200;
+  }
+  
+  .btn-mp-primary {
+    @apply px-8 py-2.5 bg-mp-blue text-white rounded-full font-semibold hover:bg-blue-700 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+}
+
+/* Custom fade-in animation */
+.fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
