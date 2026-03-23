@@ -48,6 +48,7 @@ const Search = ({ onSearch, isLoading }) => {
             onChange={handleChange}
             placeholder="Ej: 7.610.685-7"
             disabled={isLoading}
+            maxLength={12} // xx.xxx.xxx-x son máximo 12 caracteres
           />
         </div>
         

@@ -10,6 +10,10 @@ export default defineConfig({
         target: 'http://192.168.7.23:8084',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
+      },
+      '/storage': {
+        target: 'http://localhost:3001',
+        changeOrigin: true
       }
     }
   }

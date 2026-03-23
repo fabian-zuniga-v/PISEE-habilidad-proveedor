@@ -3,6 +3,7 @@ import Search from './components/Search';
 import ProviderDashboard from './components/ProviderDashboard';
 import ProviderTabs from './components/ProviderTabs';
 import { prepareHabilidadDataForDB, saveToDatabase } from './utils/piseeStorage';
+import cenabastLogo from './assets/Logo-Cenabast.png';
 
 function App() {
   const [providerData, setProviderData] = useState(null);
@@ -16,26 +17,30 @@ function App() {
 
     try {
       const response = await fetch(`/api/chilecompra/habilidad/${rut}`);
-      
+
       if (!response.ok) {
         throw new Error('Error al consultar los datos del proveedor. Verifique el RUT e intente nuevamente.');
       }
 
       const data = await response.json();
-      
+
       if (data.success === "OK" && data.payload) {
         setProviderData(data.payload);
-        
+
         // --- Added Database Storage Logic ---
         try {
           const dbPayload = prepareHabilidadDataForDB(data);
           const saveResult = await saveToDatabase(dbPayload);
           console.log('Database operation:', saveResult);
+
+          if (saveResult.success && saveResult.generatedId) {
+            setProviderData(prev => ({ ...prev, dbId: saveResult.generatedId }));
+          }
         } catch (dbErr) {
           console.warn('Silent fail: Non-critical DB error during search:', dbErr);
         }
         // ------------------------------------
-        
+
       } else {
         throw new Error(data.errores?.[0] || 'No se encontraron datos para el RUT ingresado.');
       }
@@ -50,20 +55,20 @@ function App() {
   return (
     <div className="min-h-screen bg-mp-bg">
       <header className="print:hidden">
-        {/* Main Bar with reverted color */}
-        <div className="bg-[#0B213F] text-white shadow-lg">
+        {/* Header con Logo Original y Fondo Azul Oscuro */}
+        <div className="bg-[#0B213F] shadow-lg">
           <div className="max-w-[1240px] mx-auto px-10 h-24 flex items-center justify-between">
-            {/* Simple Branding */}
+            {/* Logotipo Cenabast Oficial */}
             <div className="flex items-center">
-              <span className="text-3xl font-black tracking-tight leading-none text-white lowercase">cenabast</span>
+              <img src={cenabastLogo} alt="Logo Cenabast" className="h-[120px] w-auto" />
             </div>
 
             {/* Navigation */}
             <nav className="flex items-center h-full gap-8">
               <div className="h-full flex items-center relative">
-                <a 
-                  href="#" 
-                  className="text-xs font-bold tracking-[0.1em] text-white py-2"
+                <a
+                  href="#"
+                  className="text-xs font-bold tracking-[0.1em] text-white py-2 uppercase"
                 >
                   HOME
                 </a>

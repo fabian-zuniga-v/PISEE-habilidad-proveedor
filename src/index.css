@@ -31,6 +31,45 @@
   }
 }
 
+/* Impresión del Certificado */
+@media print {
+  /* Ocultar TODO lo que no sea el certificado */
+  body * {
+    visibility: hidden;
+  }
+  
+  /* Mostrar solo el bloque de certificado y sus hijos */
+  #printable-certificate, #printable-certificate * {
+    visibility: visible;
+  }
+  
+  /* Reset de posiciones para que aparezca al inicio de la página */
+  #printable-certificate {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Forzar fondos de colores */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  body {
+    background: white !important;
+  }
+
+  /* Ajustar márgenes de página */
+  @page {
+    margin: 1cm;
+    size: A4;
+  }
+}
+
 /* Custom fade-in animation */
 .fade-in {
   animation: fadeIn 0.4s ease-out;
